@@ -1,8 +1,8 @@
 import { BrowserProvider, Contract, formatEther, parseEther } from "ethers";
 
 // Deployed contract addresses (Hardhat localhost)
-export const CROWDTOKEN_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
-export const CROWDFUNDING_ADDRESS = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
+export const CROWDTOKEN_ADDRESS = "0xEf250A3055135b41095c6f8292073a84bfFDe2f3";
+export const CROWDFUNDING_ADDRESS = "0xFc5C1f17a4405d9e6540A6B00c86Df6866CE84BC";
 
 export const CROWDFUNDING_ABI = [
   "function campaignCount() view returns (uint256)",
