@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { BrowserProvider, formatEther } from "ethers";
 
-const HARDHAT_CHAIN_ID = "0x7A69"; // 31337 in hex
+const SEPOLIA_CHAIN_ID = "0xaa36a7"; // 31337 in hex
 
 interface WalletContextType {
     walletAddress: string | null;
@@ -16,27 +16,28 @@ interface WalletContextType {
 
 const WalletContext = createContext<WalletContextType | null>(null);
 
-async function switchToHardhat() {
+async function switchToSepolia() {
     const ethereum = (window as any).ethereum;
     if (!ethereum) return;
 
     try {
-        // Try switching to Hardhat network
+        // Пытаемся переключиться на Sepolia
         await ethereum.request({
             method: "wallet_switchEthereumChain",
-            params: [{ chainId: HARDHAT_CHAIN_ID }],
+            params: [{ chainId: SEPOLIA_CHAIN_ID }],
         });
     } catch (switchError: any) {
-        // Chain not added yet — add it
+        // Если сеть не добавлена в MetaMask (ошибка 4902), добавляем её
         if (switchError.code === 4902) {
             await ethereum.request({
                 method: "wallet_addEthereumChain",
                 params: [
                     {
-                        chainId: HARDHAT_CHAIN_ID,
-                        chainName: "Hardhat Localhost",
-                        nativeCurrency: { name: "ETH", symbol: "ETH", decimals: 18 },
-                        rpcUrls: ["http://127.0.0.1:8545"],
+                        chainId: SEPOLIA_CHAIN_ID,
+                        chainName: "Sepolia Test Network",
+                        nativeCurrency: { name: "Sepolia ETH", symbol: "ETH", decimals: 18 },
+                        rpcUrls: ["https://rpc.sepolia.org"], // Официальный публичный RPC
+                        blockExplorerUrls: ["https://sepolia.etherscan.io"],
                     },
                 ],
             });
@@ -88,7 +89,7 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         try {
             if (typeof window !== "undefined" && (window as any).ethereum) {
                 // Switch to Hardhat network first
-                await switchToHardhat();
+                await switchToSepolia()
 
                 const provider = new BrowserProvider((window as any).ethereum);
                 const accounts = await provider.send("eth_requestAccounts", []);
