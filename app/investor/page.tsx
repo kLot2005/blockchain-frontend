@@ -286,7 +286,7 @@ function InvestorContent() {
             </div>
           ) : activeCampaigns.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {activeCampaigns.map((campaign) => (
+              {activeCampaigns.map((campaign) => ( 
                 <Card key={campaign.id} className="border-border bg-card overflow-hidden group">
                   <div className="aspect-video bg-secondary relative">
                     <div className="absolute inset-0 flex items-center justify-center text-muted-foreground">

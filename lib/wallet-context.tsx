@@ -88,7 +88,6 @@ export function WalletProvider({ children }: { children: ReactNode }) {
         setIsConnecting(true);
         try {
             if (typeof window !== "undefined" && (window as any).ethereum) {
-                // Switch to Hardhat network first
                 await switchToSepolia()
 
                 const provider = new BrowserProvider((window as any).ethereum);
